@@ -1,0 +1,88 @@
+import logging
+import re
+import os
+import sys
+
+# Setup logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+
+class LogParser:
+    def __init__(self, input_file):
+        self.input_file = input_file
+
+        # Ensure logs directory exists
+        os.makedirs("logs", exist_ok=True)
+
+        # Regex patterns
+        self.pattern = {
+            "Error": re.compile(r"\berror\b", re.IGNORECASE),
+            "Warning": re.compile(r"\bwarning\b", re.IGNORECASE),
+            "Failure": re.compile(r"\bfail(ed)?\b", re.IGNORECASE),
+            "Critical": re.compile(r"cannot|get.*fail|taint", re.IGNORECASE)
+        }
+
+        # Output files
+        self.output_file = {
+            "Error": "logs/error.log",
+            "Warning": "logs/warning.log",
+            "Failure": "logs/failure.log",
+            "Critical": "logs/critical.log"
+        }
+
+        # Counters
+        self.count = {key: 0 for key in self.pattern}
+
+    def validate(self):
+        logging.info("Starting log validation...")
+
+        # Clear old log files
+        for file in self.output_file.values():
+            open(file, 'w').close()
+        logging.info("Cleared old log files")
+
+        try:
+            with open(self.input_file, 'r', encoding="utf-8", errors="ignore") as f:
+                for line_no, line in enumerate(f, start=1):
+                    line = line.strip()
+                    if not line:
+                        continue
+
+                    for key, pattern in self.pattern.items():
+                        if pattern.search(line):
+                            self.count[key] += 1
+                            self._write_log(key, line_no, line)
+                            break  # prevent double counting
+
+            self._print_summary()
+
+        except FileNotFoundError:
+            logging.error(f"Input file not found: {self.input_file}")
+
+        except Exception as e:
+            logging.error(f"Unexpected error: {e}")
+
+    def _write_log(self, key, line_no, line):
+        try:
+            with open(self.output_file[key], "a") as out:
+                out.write(f"[Line {line_no}] {line}\n")
+        except Exception as e:
+            logging.error(f"Failed writing to {key} log: {e}")
+
+    def _print_summary(self):
+        logging.info("===== LOG VALIDATION SUMMARY =====")
+        for key, value in self.count.items():
+            logging.info(f"{key}: {value}")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python log_parser.py <log_file>")
+        sys.exit(1)
+
+    file = sys.argv[1]
+    parser = LogParser(file)
+    parser.validate()
