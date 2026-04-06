@@ -1,0 +1,62 @@
+[    0.000000] Booting Linux Kernel...
+[    0.010000] INFO: Initializing hardware
+[    0.020000] WARNING: Voltage unstable detected
+[    0.030000] ERROR: DDR training failed
+[    0.040000] INFO: DDR init retry
+[    0.050000] FAIL: DDR init failed again
+
+[    0.100000] INFO: Starting network subsystem
+[    0.110000] bm-dwmac 4070000.ethernet: Cannot get clk_500m_eth!
+[    0.120000] bm-dwmac 4070000.ethernet: Cannot get gate_clk_axi4!
+[    0.130000] WARNING: Ethernet using random MAC
+[    0.140000] ERROR: PHY initialization failed
+[    0.150000] FAIL: Network bringup failed
+
+[    0.200000] INFO: Loading drivers
+[    0.210000] pwm: bad vermagic: kernel tainted
+[    0.220000] CRITICAL: kernel tainted due to external module
+[    0.230000] error: driver load failed
+[    0.240000] warning: retry loading driver
+[    0.250000] FAIL: driver retry failed
+
+[    0.300000] INFO: Starting USB subsystem
+[    0.310000] usbcore: registered new interface driver usbfs
+[    0.320000] usbcore: registered new device driver usb
+[    0.330000] WARNING: USB power unstable
+[    0.340000] ERROR: USB device not responding
+
+[    0.400000] INFO: Starting filesystem
+[    0.410000] EXT4-fs: mounted successfully
+[    0.420000] ERROR: filesystem corruption detected
+[    0.430000] FAIL: fsck failed
+
+[    0.500000] INFO: Starting user space
+[    0.510000] random: uninitialized urandom read
+[    0.520000] WARNING: low entropy detected
+[    0.530000] error: random init failed
+[    0.540000] CRITICAL: security module failure
+
+[    0.600000] INFO: Starting services
+[    0.610000] dbus: started successfully
+[    0.620000] ERROR: service start failed
+[    0.630000] FAIL: service crashed
+[    0.640000] WARNING: retrying service
+
+[    0.700000] INFO: Finalizing boot
+[    0.710000] Boot completed with warnings
+[    0.720000] ERROR: delayed init failure detected
+[    0.730000] FAIL: system unstable
+
+[    0.800000] DEBUG: This should not match
+[    0.810000] TRACE: entering function
+[    0.820000] INFO: all systems nominal
+
+[    0.900000] get clk failed during init
+[    0.910000] cannot get resource
+[    0.920000] getting values but not fail
+[    0.930000] get random success
+[    0.940000] cannot initialize module fail safe
+
+[    1.000000] ERROR FAIL combined issue detected
+[    1.010000] WARNING ERROR mixed log
+[    1.020000] FAIL ERROR WARNING CRITICAL all in one line
